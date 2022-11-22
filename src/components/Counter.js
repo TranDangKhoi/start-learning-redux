@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment } from "../redux/counter";
+import { decrement, increment, incrementByValue } from "../redux/counter";
 
 const Counter = () => {
   const { count } = useSelector((state) => state.counter);
@@ -11,12 +11,16 @@ const Counter = () => {
   const handleDecrement = () => {
     dispatch(decrement());
   };
+  const handleIncrementByValue = () => {
+    dispatch(incrementByValue(10));
+  };
   return (
     <div className="flex flex-col items-center p-5 bg-white shadow-lg border border-gray-300 w-[200px] mx-auto mt-10">
       <h2 className="mb-5">Count: {count}</h2>
       <div className="flex items-center justify-center gap-x-5">
         <button onClick={handleDecrement}>-</button>
         <button onClick={handleIncrement}>+</button>
+        <button onClick={handleIncrementByValue}>+10</button>
       </div>
     </div>
   );

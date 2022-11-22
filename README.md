@@ -49,7 +49,7 @@ export function increase() {
 }
 ```
 
-- Reducer: Là nơi xác định State thay đổi như thế nào
+- **Reducer**: Là nơi xác định State thay đổi như thế nào
 
 ```js
 export default function counterApp(state = initialState, action) {
@@ -70,9 +70,15 @@ export default function counterApp(state = initialState, action) {
 }
 ```
 
-- Store: Là nơi quản lý State, cho phép truy cập State qua `getState()`, update State qua `dispatch(action)`, đăng kí listener qua `subscribe(listener)`
+- **Store**: Là nơi quản lý State, cho phép truy cập State qua `getState()`, update State qua `dispatch(action)`, đăng kí listener qua `subscribe(listener)`
 
-- View: Là phần hiển thị dữ liệu được cung cấp bởi Store
+```js
+import { createStore } from "redux";
+import counterApp from "./reducers";
+let store = createStore(counterApp);
+```
+
+- **View**: Là phần hiển thị dữ liệu được cung cấp bởi Store
 
 # Data flow của Redux (giải thích cặn kẽ bằng cách ứng dụng vào thực tế)
 

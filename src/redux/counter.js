@@ -1,5 +1,6 @@
 const INCREMENT = "increment";
 const DECREMENT = "decrement";
+const INCREMENTBYVALUE = "incrementByValue";
 const initialState = {
   name: "Khoi",
   count: 0,
@@ -14,6 +15,11 @@ export const decrement = () => ({
   type: DECREMENT,
 });
 
+export const incrementByValue = (value) => ({
+  type: INCREMENTBYVALUE,
+  payload: value,
+});
+
 function counterReducer(state = initialState, action) {
   switch (action.type) {
     case INCREMENT:
@@ -25,6 +31,11 @@ function counterReducer(state = initialState, action) {
       return {
         ...state,
         count: state.count - 1,
+      };
+    case INCREMENTBYVALUE:
+      return {
+        ...state,
+        count: state.count + action.payload,
       };
     default:
       return state;
