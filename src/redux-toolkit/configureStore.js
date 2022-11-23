@@ -1,4 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import logger from "redux-logger";
 import counterSlice, { incrementByValue } from "./counterSlice";
 import globalSlice from "./globalSlice";
 // High order function:
@@ -13,7 +14,6 @@ import globalSlice from "./globalSlice";
 const loggerMiddleware = (store) => (next) => (action) => {
   console.log(action);
   // Sửa lại giá trị của payload
-  action.payload = 10;
   // Thêm next(action) để lifecycle được tiếp tục
   next(action);
 };
@@ -26,13 +26,13 @@ const reducer = combineReducers({
 // store
 const store = configureStore({
   reducer,
-  middleware: (gDM) => gDM().concat(loggerMiddleware),
+  middleware: (gDM) => gDM().concat(logger),
 });
 
-store.subscribe(() => {
-  // javascript observer pattern
-  console.log(`Current statte: ${store.getState().counter.count}`);
-});
+// store.subscribe(() => {
+//   // javascript observer pattern
+//   console.log(`Current statte: ${store.getState().counter.count}`);
+// });
 
 store.dispatch(incrementByValue(1));
 store.dispatch(incrementByValue(3));

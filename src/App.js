@@ -1,11 +1,9 @@
 import "./App.css";
-import Counter from "./components/Counter";
-import SwitchDarkMode from "./components/SwitchDarkMode";
+import HackerNews from "./components/HackerNews";
 function App() {
   return (
     <div>
-      <Counter></Counter>
-      <SwitchDarkMode></SwitchDarkMode>
+      <HackerNews></HackerNews>
     </div>
   );
 }
