@@ -26,7 +26,8 @@
 
 # Nguyên lí hoạt động của Redux
 
-![Redux lifecycle](https://d33wubrfki0l68.cloudfront.net/08d01ed85246d3ece01963408572f3f6dfb49d41/4bc12/assets/images/reduxasyncdataflowdiagram-d97ff38a0f4da0f327163170ccc13e80.gif)
+![reduxasyncdataflowdiagram-d97ff38a0f4da0f327163170ccc13e80](https://user-images.githubusercontent.com/88824627/203573940-0a5a4f78-4044-4f80-b180-5e67c0c2c433.gif)
+
 
 Redux được xây dựng dựa trên 3 nguyên lý:
 
