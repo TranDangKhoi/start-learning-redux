@@ -96,7 +96,7 @@ Hãy hình dung anh này như một anh chàng đánh máy, anh ta biết bạn 
 
 The Action Creator tạo ra một action là formated object chứa type và thông tin của action đó. Type thường sẽ là một hằng số được định nghĩa trước, kiểu như INCREASE hay DECREASE.
 
-####
+#### The Store
 
 ![The Store](https://images.viblo.asia/8052ba36-c337-4c02-bb04-246e43ab4512.png)
 
