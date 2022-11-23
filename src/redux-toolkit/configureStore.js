@@ -13,6 +13,8 @@ import globalSlice from "./globalSlice";
 const loggerMiddleware = (store) => (next) => (action) => {
   console.log(action);
   // Sửa lại giá trị của payload
+  action.payload = 10;
+  // Thêm next(action) để lifecycle được tiếp tục
   next(action);
 };
 const reducer = combineReducers({
