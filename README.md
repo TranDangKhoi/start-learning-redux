@@ -28,7 +28,6 @@
 
 ![reduxasyncdataflowdiagram-d97ff38a0f4da0f327163170ccc13e80](https://user-images.githubusercontent.com/88824627/203573940-0a5a4f78-4044-4f80-b180-5e67c0c2c433.gif)
 
-
 Redux được xây dựng dựa trên 3 nguyên lý:
 
 - Nguồn dữ liệu tin cậy duy nhất: `State` của toàn bộ ứng được chứa trong một object tree nằm trong `Store` duy nhất
@@ -160,3 +159,131 @@ Cuối cùng là The root component. Tất cả các React app đều có The ro
 Hãy hình dung đây là một giám đốc C-level (CEO, COO....). Ông giám đốc này sẽ tạo ra The Store và chỉ định The Reducers nào được sử dụng, tập hợp The view layer binding cùng với The views.
 
 Sau khi chỉ định và tập hợp các thành phần trong team, giám đốc của chúng ta sẽ để cho các bộ phận bên dưới tự hoạt động.
+
+# Bài tập cơ bản Counting App
+
+- Sau khi hiểu na ná Redux nó hoạt động ra sao thì ta có thể thử áp dụng những kiến thức đã hiểu để làm một app counting cơ bản:
+
+- Trước đây khi sử dụng state thì ta sẽ code như sau:
+
+```js
+const [count, setCount] = useState(0);
+const handleIncrement = () => {
+  setCount((count) => count + 1);
+};
+const handleDecrement = () => {
+  setCount((count) => count - 1);
+};
+return (
+  <div>
+    <h2>Count: {count}</h2>
+    <div>
+      <button onClick={handleDecrement}>-</button>
+      <button onClick={handleIncrement}>+</button>
+    </div>
+  </div>
+);
+```
+
+- Nhưng với redux thì công cuộc set-up sẽ tốn công sức hơn một chút nhưng bù lại sau này rất dễ maintain
+
+- Mình sẽ sử dụng `Redux toolkit` để hướng dẫn luôn chứ không sử dụng Redux thuần:
+
+  - Đầu tiên, ta sẽ phải tạo ra một `Store` - một nơi quản lý, cập nhật `State`
+
+  ```js
+  // Tạm đặt tên file là configureStore.js
+  const store = configureStore({
+    reducer,
+  });
+  ```
+
+  - Tiếp theo, ta sẽ tạo ra `Reducer` - một nơi để xác định State thay đổi như thế nào:
+
+  ```js
+  // Tạm đặt tên file là counterSlice.js
+  const counterSlice = createSlice({
+    // Tên của slice để sau này muốn lấy giá trị thì dùng name này để lấy
+    name: "counter",
+    initialState: {
+      count: 0,
+    },
+    reducers: {},
+  });
+
+  export const {} = counterSlice.actions;
+
+  export default counterSlice.reducer;
+  ```
+
+  - Ok, lúc này ta đã có thể lấy ra giá trị của initialState và nhét vào UI của trình duyệt bằng cách sau:
+
+  ```js
+  const { count } = useSelector((state) => state.counter);
+  // Hoặc:
+  const count = useSelector((state) => state.counter.count);
+  ```
+
+  - Nhưng bây giờ vẫn chưa có bất kì chức năng nào cho Counter cả, nên ta phải viết chức năng cho nó:
+
+  ```js
+  const counterSlice = createSlice({
+    name: "counter",
+    initialState: {
+      count: 0,
+    },
+    reducers: {
+      // Chức năng tăng giá trị count lên 1
+      increment: (state) => ({
+        ...state,
+        count: state.count + 1,
+      }),
+      // Chức năng giảm giá trị count xuống 1
+
+      decrement: (state) => ({
+        ...state,
+        count: state.count - 1,
+      }),
+      // Chức năng tăng giá trị count theo giá trị của payload được truyền vào
+      incrementByValue: (state, { payload }) => ({
+        ...state,
+        count: state.count + payload,
+      }),
+      // Chức năng giảm giá trị count theo giá trị của payload được truyền vào
+      decrementByValue: (state, { payload }) => ({
+        ...state,
+        count: state.count - payload,
+      }),
+    },
+  });
+  ```
+
+  - Giờ ta đã hoàn thiện xong 4 chức năng như trên, giờ làm thế nào để có thể invoke nó thì trong redux có một khái niệm gọi là `dispatch`, dùng để thực thi một action được gửi từ UI về
+
+  ```js
+  // Thay thế đoạn code cũ
+  const dispatch = useDispatch();
+  const handleIncrement = () => {
+    dispatch(increment());
+  };
+  const handleDecrement = () => {
+    dispatch(decrement());
+  };
+  const handleIncrementByValue = () => {
+    dispatch(incrementByValue(10));
+  };
+  const handleDecrementByValue = () => {
+    dispatch(decrementByValue(10));
+  };
+  return(
+  <div>
+    <h2>Count: {count}</h2>
+    <div>
+      <button onClick={handleDecrement}>-</button>
+      <button onClick={handleIncrement}>+</button>
+      <button onClick={handleIncrementByValue}>+10</button>
+      <button onClick={handleIncrementByValue}>-10</button>
+    </div>
+  </div>;
+  )
+  ```

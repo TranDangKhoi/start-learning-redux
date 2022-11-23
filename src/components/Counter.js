@@ -17,10 +17,10 @@ const Counter = () => {
     dispatch(decrement());
   };
   const handleIncrementByValue = () => {
-    dispatch(incrementByValue({ value: 10 }));
+    dispatch(incrementByValue(10));
   };
   const handleDecrementByValue = () => {
-    dispatch(decrementByValue({ value: 10 }));
+    dispatch(decrementByValue(10));
   };
   return (
     <div className="flex flex-col items-center p-5 dark:bg-slate-900 bg-white shadow-lg border border-gray-300 dark:border-slate-800 w-[200px] mx-auto mt-10">
