@@ -34,7 +34,7 @@ Redux được xây dựng dựa trên 3 nguyên lý:
 
 - Thay đổi chỉ bằng hàm thuần túy: Để chỉ ra cách mà `State` được biến đổi bởi `Action` chúng ta dùng các pure function gọi là `Reducer`
 
-![Redux lifecycle](https://res.cloudinary.com/practicaldev/image/fetch/s--m5BdPzhS--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://i.imgur.com/riadAin.gif)
+![Redux lifecycle](https://d33wubrfki0l68.cloudfront.net/08d01ed85246d3ece01963408572f3f6dfb49d41/4bc12/assets/images/reduxasyncdataflowdiagram-d97ff38a0f4da0f327163170ccc13e80.gif)
 
 Về cơ bản, Redux có 4 thành phần sau:
 
