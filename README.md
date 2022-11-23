@@ -26,6 +26,8 @@
 
 # Nguyên lí hoạt động của Redux
 
+![Redux lifecycle](https://d33wubrfki0l68.cloudfront.net/08d01ed85246d3ece01963408572f3f6dfb49d41/4bc12/assets/images/reduxasyncdataflowdiagram-d97ff38a0f4da0f327163170ccc13e80.gif)
+
 Redux được xây dựng dựa trên 3 nguyên lý:
 
 - Nguồn dữ liệu tin cậy duy nhất: `State` của toàn bộ ứng được chứa trong một object tree nằm trong `Store` duy nhất
@@ -33,8 +35,6 @@ Redux được xây dựng dựa trên 3 nguyên lý:
 - Trạng thái chỉ được phép đọc: Cách duy nhất để thay đổi `State` của ứng dụng là phát một `Action` (là 1 object mô tả những gì xảy ra)
 
 - Thay đổi chỉ bằng hàm thuần túy: Để chỉ ra cách mà `State` được biến đổi bởi `Action` chúng ta dùng các pure function gọi là `Reducer`
-
-![Redux lifecycle](https://d33wubrfki0l68.cloudfront.net/08d01ed85246d3ece01963408572f3f6dfb49d41/4bc12/assets/images/reduxasyncdataflowdiagram-d97ff38a0f4da0f327163170ccc13e80.gif)
 
 Về cơ bản, Redux có 4 thành phần sau:
 
