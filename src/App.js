@@ -1,11 +1,16 @@
 import "./App.css";
-import Counter from "./components/Counter";
 import { useSelector } from "react-redux";
+import Card from "./components/Card";
+import SwitchDarkMode from "./components/SwitchDarkMode";
+import Counter from "./components/Counter";
 function App() {
-  const { count } = useSelector((state) => state.counter);
+  const globalOptions = useSelector((state) => state.global);
+  console.log(globalOptions);
+
   return (
     <div>
-      <h2>The count from Counter.js is: {count}</h2>
+      <SwitchDarkMode></SwitchDarkMode>
+      <Card></Card>
       <Counter></Counter>
     </div>
   );

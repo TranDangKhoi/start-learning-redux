@@ -10,14 +10,17 @@ const counterSlice = createSlice({
       ...state,
       count: state.count + 1,
     }),
+
     decrement: (state) => ({
       ...state,
       count: state.count - 1,
     }),
+
     incrementByValue: (state, { payload }) => ({
       ...state,
       count: state.count + payload.value,
     }),
+
     decrementByValue: (state, { payload }) => ({
       ...state,
       count: state.count - payload.value,
