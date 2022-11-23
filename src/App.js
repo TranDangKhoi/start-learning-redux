@@ -1,17 +1,15 @@
 import "./App.css";
 import { useSelector } from "react-redux";
-import Card from "./components/Card";
-import SwitchDarkMode from "./components/SwitchDarkMode";
-import Counter from "./components/Counter";
+import Sidebar from "./components/Sidebar";
+import SidebarToggleButton from "./components/SidebarToggleButton";
 function App() {
   const globalOptions = useSelector((state) => state.global);
   console.log(globalOptions);
 
   return (
     <div>
-      <SwitchDarkMode></SwitchDarkMode>
-      <Card></Card>
-      <Counter></Counter>
+      <Sidebar></Sidebar>
+      <SidebarToggleButton></SidebarToggleButton>
     </div>
   );
 }
