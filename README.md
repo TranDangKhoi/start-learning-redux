@@ -287,3 +287,77 @@ return (
   </div>;
   )
   ```
+
+# Redux Saga là gì?
+
+- Redux-Saga là một thư viện redux middleware (Trong Redux, middleware là một lớp nằm giữa Reducers và Dispatch Action) giúp bạn quản lý những side effect trong redux. Redux-Saga sử dụng Generators (function) của ES6 để xử lý “bất đồng bộ” một cách “đồng bộ”. Ví dụ:
+
+```js
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import Api from "...";
+
+// worker Saga: will be fired on USER_FETCH_REQUESTED actions
+function* fetchUser(action) {
+  try {
+    const user = yield call(Api.fetchUser, action.payload.userId);
+    yield put({ type: "USER_FETCH_SUCCEEDED", user: user });
+  } catch (e) {
+    yield put({ type: "USER_FETCH_FAILED", message: e.message });
+  }
+}
+
+/*
+  Starts fetchUser on each dispatched `USER_FETCH_REQUESTED` action.
+  Allows concurrent fetches of user.
+*/
+function* mySaga() {
+  yield takeEvery("USER_FETCH_REQUESTED", fetchUser);
+}
+```
+
+- TẠI SAO để xử lý bất đồng bộ, Redux Saga không sử dụng async await mà lại khuyến khích mình nên sử dụng generator function ?
+
+- Bởi vì, giữa async await và generator function có điểm khác biệt so với nhau:
+
+  - Async await khi gọi function thì nó sẽ chạy ngay, nhưng với Generator function thì ta phải sử dụng next() thì nó mới bắt đầu chạy, và chỉ chạy 1 lần -> sẽ bớt phần nào lo lắng tới việc crash/spike lag/request quá nhiều lần
+
+- Về cái next() thì khi sử dụng Redux Saga, bên phát triển họ đã tối ưu cho mình rồi, nên mình không cần suy nghĩ lúc nào cần thực thi function đó, mình chỉ cần hiểu rằng là vì nó là `middleware` => Nó đã viết sẵn `next()` cho mình, còn mình chỉ cần sử dụng `yield` thôi
+
+### Các khái niệm và câu lệnh trong @redux-saga/effects
+
+- worker Saga: sẽ được chạy mỗi khi có một action liên quan tới nó được dispatch, ví dụ:
+
+```js
+// Fired on USER_FETCH_REQUESTED actions
+function* fetchUser(action) {
+  try {
+    const user = yield call(Api.fetchUser, action.payload.userId);
+    yield put({ type: "USER_FETCH_SUCCEEDED", user: user });
+  } catch (e) {
+    yield put({ type: "USER_FETCH_FAILED", message: e.message });
+  }
+}
+
+/*
+  Starts fetchUser on each dispatched `USER_FETCH_REQUESTED` action.
+  Allows concurrent fetches of user.
+*/
+function* mySaga() {
+  yield takeEvery("USER_FETCH_REQUESTED", fetchUser);
+}
+```
+
+- put: Later...
+
+- takeEvery: Nếu thực thi 10 lần, thì chạy cả 10 lần
+
+- takeLatest: Nếu thực thi 10 lần, thì chỉ chạy 1 cái gần nhất, 9 cái còn lại bị hủy
+
+### Quy trình hoạt động của redux-saga
+
+1. Redux-saga dispatched from component(getNews)
+2. Watcher Saga catches the action
+3. Handler calls a function to make the request(handleGetNews)
+4. Call requestGetNews
+5. setUser
+6. Update component

@@ -2,21 +2,15 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import counterSlice, { incrementByValue } from "./counterSlice";
 import globalSlice from "./globalSlice";
-// High order function:
-// const loggerMiddleware = function(store){
-//   return function(next){
-//     return function(action){
-//       // Your code here
-//     }
-//   }
-// }
-// Viết rút gọn lại:
+import createSagaMiddleware from "@redux-saga/core";
+const sagaMiddleware = createSagaMiddleware();
 const loggerMiddleware = (store) => (next) => (action) => {
   console.log(action);
   // Sửa lại giá trị của payload
   // Thêm next(action) để lifecycle được tiếp tục
   next(action);
 };
+
 const reducer = combineReducers({
   // counterSlice và globalSlice là Reducer
   counter: counterSlice,
@@ -26,7 +20,7 @@ const reducer = combineReducers({
 // store
 const store = configureStore({
   reducer,
-  middleware: (gDM) => gDM().concat(logger),
+  middleware: (gDM) => gDM().concat(logger, sagaMiddleware),
 });
 
 // store.subscribe(() => {
@@ -34,8 +28,10 @@ const store = configureStore({
 //   console.log(`Current statte: ${store.getState().counter.count}`);
 // });
 
-store.dispatch(incrementByValue(1));
-store.dispatch(incrementByValue(3));
-store.dispatch(incrementByValue(5));
+// store.dispatch(incrementByValue(1));
+// store.dispatch(incrementByValue(3));
+// store.dispatch(incrementByValue(5));
+
+// sagaMiddleware.run(rootSaga);
 
 export default store;
