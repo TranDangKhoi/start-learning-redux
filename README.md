@@ -347,6 +347,8 @@ function* mySaga() {
 }
 ```
 
+- gDm: Get Default Middleware
+
 - put: Later...
 
 - takeEvery: Nếu thực thi 10 lần, thì chạy cả 10 lần
@@ -359,5 +361,5 @@ function* mySaga() {
 2. Watcher Saga catches the action
 3. Handler calls a function to make the request(handleGetNews)
 4. Call requestGetNews
-5. setUser
+5. setNews
 6. Update component
