@@ -1,7 +1,6 @@
 // npm install axios
-import axios from "axios";
 import { debounce } from "lodash";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNews, setQuery } from "../sagas/news/newsSlice";
 

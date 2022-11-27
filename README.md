@@ -351,6 +351,15 @@ function* mySaga() {
 
 - put: Later...
 
+- fork:
+
+  - Non-blocking function - Là một function chạy trong khi các function bên dưới cũng được chạy theo: fork()
+  - Blocking function - Là một function phải chờ nó chạy xong thì thằng bên dưới mới chạy được: call(), put()
+
+- all: Ngang với Promise.all -> đợi tất cả chạy xong
+
+- select: giống `useSelector` nhưng `useSelector` sử dụng ở component, còn `select` thì sử dụng trong handler
+
 - takeEvery: Nếu thực thi 10 lần, thì chạy cả 10 lần
 
 - takeLatest: Nếu thực thi 10 lần, thì chỉ chạy 1 cái gần nhất, 9 cái còn lại bị hủy
