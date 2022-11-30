@@ -2,7 +2,12 @@
 import { debounce } from "lodash";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getNews, setQuery } from "../sagas/news/newsSlice";
+import {
+  getNews,
+  otherAction,
+  setQuery,
+  updateLoadingAction,
+} from "../sagas/news/newsSlice";
 
 const HackerNews = () => {
   const dispatch = useDispatch();
@@ -13,6 +18,9 @@ const HackerNews = () => {
   const handleChangeQuery = debounce((e) => {
     dispatch(setQuery(e.target.value));
   }, 1000);
+  const handleSetLoading = () => {
+    dispatch(updateLoadingAction({ payload: true }));
+  };
   return (
     <div className="w-2/4 p-5 mx-auto mt-5 mb-5 bg-white rounded-lg shadow-md">
       <div className="flex mb-5 gap-x-5">
@@ -30,6 +38,12 @@ const HackerNews = () => {
           className="flex-shrink-0 p-5 font-semibold text-white bg-blue-500 rounded-md"
         >
           Fetching
+        </button>
+        <button
+          className="flex-shrink-0 p-5 font-semibold text-white bg-blue-500 rounded-md"
+          onClick={handleSetLoading}
+        >
+          Set loading
         </button>
       </div>
       {loading && (

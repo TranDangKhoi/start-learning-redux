@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
+
+export const updateLoadingAction = createAction("updateLoading");
 
 const newsSlice = createSlice({
   name: "news",
@@ -22,6 +24,10 @@ const newsSlice = createSlice({
       query: action.payload,
     }),
   },
+  extraReducers: (builder) =>
+    builder.addCase(updateLoadingAction, (state, action) => {
+      state.loading = action.payload;
+    }),
 });
 
 export const { getNews, setLoading, setNews, setQuery } = newsSlice.actions;

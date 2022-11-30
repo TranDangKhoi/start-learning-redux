@@ -372,3 +372,59 @@ function* mySaga() {
 4. Call requestGetNews
 5. setNews
 6. Update component
+
+# extraReducers là gì ?
+
+- `extraReducers` bản chất vẫn là `reducers` nhưng sẽ có một số trường hợp khi chúng ta muốn nhận vào action của một **slice khác**, ví dụ ta đang code chức năng cho `newsSlice` nhưng action ta sử dụng để dispatch lại từ `usersSlice`, thì lúc đó ta sẽ sử dụng `extraReducers`. Nhưng làm như vậy sẽ gây khó cho ta trong việc bảo trì code nên `extraReducers` thường được sử dụng cùng với `redux-thunk`
+
+- Bây giờ, mình sẽ làm 1 ví dụ cơ bản về extraReducers:
+
+  - Ở file newSlices.js bên trong createSlice, ta sẽ thêm một key nữa là `extraReducers`, và `extraReducers` sẽ nhận vào một tham số là `builder`:
+
+  ```js
+  const newsSlice = createSlice({
+    name: "news",
+    initialState: {
+      loading: false,
+    },
+    reducers: {
+      // your reducers
+    },
+    extraReducers: (builder) => {
+      // extraReducers code
+    },
+  });
+  ```
+
+  - Để demo chức năng lấy action từ một slice khác thì mình sẽ tạm tạo một biến có tên là `updateLoadingAction` **chứa actions của các slice khác** và **export** nó ra để sử dụng bên trong `extraReducer`:
+
+  ```js
+  export const updateLoadingAction = createAction("updateLoading");
+  ```
+
+  - Bên trong `extraReducers`, ta sẽ sử dụng một function là `builder.addCase()` để add thêm `reducers`, truyền vào `(actionCreatorWithoutPayload,(action, payload))`, sau đó mình sẽ update lại state `loading` thành `payload` từ bên component truyền vào sử dụng action mình tạo ở trên:
+
+  ```js
+  extraReducers: (builder) =>
+    builder.addCase(updateLoadingAction, (state, action) => {
+      state.loading = action.payload;
+    }),
+  ```
+
+  - Các bạn có thể thấy hiện tại state `loading` đang là false, do mình đã code bên trong `initialState` cái state `loading: false;`, giờ mình sẽ thêm event dispatch cho một button để cập nhật lại state `loading: true;`
+
+  ```js
+  const handleSetLoading = () => {
+    dispatch(updateLoadingAction({ payload: true }));
+  };
+  return (
+    <button
+      className="flex-shrink-0 p-5 font-semibold text-white bg-blue-500 rounded-md"
+      onClick={handleSetLoading}
+    >
+      Set loading
+    </button>
+  );
+  ```
+
+  - Vậy là sau khi click vào button thì loading sẽ thành true, các bạn có thể console.log ra để kiểm tra
