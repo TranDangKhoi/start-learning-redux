@@ -2,6 +2,7 @@
 import { debounce } from "lodash";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { handleFetchNews, setLoading } from "../redux-thunk/newsSlice";
 import {
   getNews,
   otherAction,
@@ -12,14 +13,18 @@ import {
 const HackerNews = () => {
   const dispatch = useDispatch();
   const { hits, loading, query } = useSelector((state) => state.news);
+  // useEffect(() => {
+  // dispatch(getNews(query));
+  // }, [dispatch, query]);
   useEffect(() => {
-    dispatch(getNews(query));
+    dispatch(handleFetchNews(query));
   }, [dispatch, query]);
   const handleChangeQuery = debounce((e) => {
-    dispatch(setQuery(e.target.value));
+    // dispatch(setQuery(e.target.value));
   }, 1000);
   const handleSetLoading = () => {
-    dispatch(updateLoadingAction({ payload: true }));
+    // dispatch(updateLoadingoadingAction(false));
+    dispatch(setLoading(true));
   };
   return (
     <div className="w-2/4 p-5 mx-auto mt-5 mb-5 bg-white rounded-lg shadow-md">

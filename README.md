@@ -290,7 +290,7 @@ return (
 
 # Redux Saga là gì?
 
-- Redux-Saga là một thư viện redux middleware (Trong Redux, middleware là một lớp nằm giữa Reducers và Dispatch Action) giúp bạn quản lý những side effect trong redux. Redux-Saga sử dụng Generators (function) của ES6 để xử lý “bất đồng bộ” một cách “đồng bộ”. Ví dụ:
+- Redux-Saga là một thư viện redux middleware (Trong Redux, middleware là một lớp nằm giữa Reducers và Dispatch Action) giúp bạn quản lý những side effect trong redux. Redux-Saga sử dụng Generators (function\*) của ES6 để xử lý “bất đồng bộ” một cách “đồng bộ”. Ví dụ:
 
 ```js
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
@@ -349,7 +349,11 @@ function* mySaga() {
 
 - gDm: Get Default Middleware
 
-- put: Later...
+- call: Gọi function. Nếu nó return về một promise, tạm dừng saga cho đến khi promise được giải quyết.
+
+- race() : Chạy nhiều effect đồng thời, sau đó hủy tất cả nếu một trong số đó kết thúc
+
+- put: dispatch một action
 
 - fork:
 
@@ -375,7 +379,7 @@ function* mySaga() {
 
 # extraReducers là gì ?
 
-- `extraReducers` bản chất vẫn là `reducers` nhưng sẽ có một số trường hợp khi chúng ta muốn nhận vào action của một **slice khác**, ví dụ ta đang code chức năng cho `newsSlice` nhưng action ta sử dụng để dispatch lại từ `usersSlice`, thì lúc đó ta sẽ sử dụng `extraReducers`. Nhưng làm như vậy sẽ gây khó cho ta trong việc bảo trì code nên `extraReducers` thường được sử dụng cùng với `redux-thunk`
+- `extraReducers` bản chất vẫn là `reducers` nhưng sẽ có một số trường hợp khi chúng ta muốn nhận vào `action` của một **slice khác**, ví dụ ta đang code chức năng cho `newsSlice` nhưng action ta sử dụng để dispatch lại từ `usersSlice`, thì lúc đó ta sẽ sử dụng `extraReducers`. Nhưng làm như vậy sẽ gây khó cho ta trong việc bảo trì code nên `extraReducers` thường được sử dụng cùng với `redux-thunk`
 
 - Bây giờ, mình sẽ làm 1 ví dụ cơ bản về extraReducers:
 
@@ -415,7 +419,7 @@ function* mySaga() {
 
   ```js
   const handleSetLoading = () => {
-    dispatch(updateLoadingAction({ payload: true }));
+    dispatch(updateLoadingAction(true));
   };
   return (
     <button
@@ -428,3 +432,9 @@ function* mySaga() {
   ```
 
   - Vậy là sau khi click vào button thì loading sẽ thành true, các bạn có thể console.log ra để kiểm tra
+
+# Redux Thunk - một phương án thay thế khi không sử dụng Redux Saga
+
+- Redux thunk cũng là một middleware của Redux.Redux Thunk được sử dụng đơn giản là khi bạn không muốn action của bạn trả về một `object`, mà là trả về 1 `function` hay một `promise` để thực hiện chức năng gì đó asynchronous
+
+- Redux thunk chỉ hợp nếu bạn làm một dự án nhỏ xíu xìu xiu vì redux-thunk khi code sẽ phải tốn nhiều dòng, gây khó khăn cho việc test các ation
