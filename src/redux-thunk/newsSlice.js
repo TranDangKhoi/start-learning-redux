@@ -1,15 +1,7 @@
-import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
-import requestGetNews from "../sagas/news/requests";
+import { createSlice, createAction } from "@reduxjs/toolkit";
+import { handleFetchNews } from "./handlers";
 
 export const setLoading = createAction("setLoading");
-
-export const handleFetchNews = createAsyncThunk(
-  "news/handleFetchNews",
-  async (query) => {
-    const response = await requestGetNews(query);
-    return response.data.hits;
-  }
-);
 
 const initialState = {
   news: [],

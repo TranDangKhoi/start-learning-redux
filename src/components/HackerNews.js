@@ -2,7 +2,8 @@
 import { debounce } from "lodash";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleFetchNews, setLoading } from "../redux-thunk/newsSlice";
+import { handleFetchNews } from "../redux-thunk/handlers";
+import { setLoading } from "../redux-thunk/newsSlice";
 import {
   getNews,
   otherAction,
